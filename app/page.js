@@ -970,10 +970,6 @@ export default function Home() {
           <p className="hero-tag">An Original Portfolio</p>
           <h1 className="hero-title">LEGACY HEIRESS</h1>
           <p className="hero-tagline">Career. Capital. Confidence. Legacy.</p>
-          <p className="hero-description">
-            Building intelligent systems, creating real-estate opportunities and designing a
-            life rooted in financial freedom and generational wealth.
-          </p>
           <div className="hero-actions">
             <button
               type="button"
@@ -1286,17 +1282,6 @@ export default function Home() {
           font-weight: 400;
           color: #ffffff;
           line-height: 1.2;
-          margin-bottom: 18px;
-          text-align: left;
-        }
-
-        .hero-description {
-          font-size: 18px;
-          font-weight: 400;
-          color: #b3b3b3;
-          opacity: 0.95;
-          line-height: 1.6;
-          max-width: 500px;
           margin-bottom: 36px;
           text-align: left;
         }
@@ -1947,7 +1932,6 @@ export default function Home() {
             font-size: 22px;
           }
 
-          .hero-description,
           .nav-link {
             font-size: 15px;
           }
@@ -1981,10 +1965,6 @@ export default function Home() {
 
           .hero-tagline {
             font-size: 18px;
-          }
-
-          .hero-description {
-            font-size: 15px;
           }
 
           .hero-actions {
@@ -2025,27 +2005,6 @@ export default function Home() {
           .movie-genre-tag {
             top: 6px;
             right: 6px;
-          }
-
-          /* Continue Watching stacks vertically on mobile so nothing there
-             requires a sideways swipe; Featured Projects keeps the Netflix-
-             style horizontal scroll, same as the Coming Soon rows. */
-          #continue-watching .row-track {
-            flex-direction: column;
-            overflow-x: visible;
-          }
-
-          #continue-watching .card {
-            flex: 1 1 auto;
-            width: 100%;
-            max-width: 480px;
-            height: auto;
-            aspect-ratio: 16 / 9;
-            margin: 0 auto;
-          }
-
-          #continue-watching .row-arrow {
-            display: none;
           }
 
           .footer {
