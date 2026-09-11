@@ -2027,17 +2027,15 @@ export default function Home() {
             right: 6px;
           }
 
-          /* Only the Coming Soon rows keep Netflix-style horizontal scroll on
-             mobile; Continue Watching and Featured Projects stack instead so
-             nothing requires a sideways swipe to be seen. */
-          #continue-watching .row-track,
-          #featured-projects .row-track {
+          /* Continue Watching stacks vertically on mobile so nothing there
+             requires a sideways swipe; Featured Projects keeps the Netflix-
+             style horizontal scroll, same as the Coming Soon rows. */
+          #continue-watching .row-track {
             flex-direction: column;
             overflow-x: visible;
           }
 
-          #continue-watching .card,
-          #featured-projects .card {
+          #continue-watching .card {
             flex: 1 1 auto;
             width: 100%;
             max-width: 480px;
@@ -2046,8 +2044,7 @@ export default function Home() {
             margin: 0 auto;
           }
 
-          #continue-watching .row-arrow,
-          #featured-projects .row-arrow {
+          #continue-watching .row-arrow {
             display: none;
           }
 
