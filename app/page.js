@@ -129,7 +129,7 @@ const ROWS = [
     cards: [
       {
         title: 'Empire Architects',
-        image: '/coming-empire-architects.png',
+        image: '/coming-the-authority.jpg',
         genre: 'Drama',
         description:
           'Follow the masterminds behind billion-dollar real estate empires. Where syndication strategy meets ruthless ambition.',
@@ -233,7 +233,6 @@ const ROWS = [
     cards: [
       {
         title: 'The Promotion',
-        image: '/coming-the-promotion.jpg',
         genre: 'Thriller',
         description: 'From manager to executive. Watch ambition become authority in the corporate climb.',
         businessProblem:
@@ -253,7 +252,7 @@ const ROWS = [
       },
       {
         title: 'The Authority',
-        image: '/coming-the-authority.jpg',
+        image: '/coming-empire-architects.png',
         genre: 'Drama',
         description: 'Build your brand. Own your narrative. Become the voice everyone wants to hear.',
         businessProblem:
@@ -281,7 +280,6 @@ const ROWS = [
     cards: [
       {
         title: 'Empire State of Mind',
-        image: '/coming-empire-state-of-mind.jpg',
         genre: 'Epic',
         description:
           'The mindset shift that transforms ordinary ambition into extraordinary empire-building power.',
@@ -292,6 +290,7 @@ const ROWS = [
       },
       {
         title: 'Freedom',
+        image: '/coming-the-promotion.jpg',
         genre: 'Adventure',
         description: 'Design your financial independence. The blueprint that liberates you from limits.',
         businessProblem:
