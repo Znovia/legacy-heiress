@@ -5,8 +5,24 @@ import { useEffect, useRef, useState } from 'react';
 const NAV_LINKS = [
   { label: 'Home', href: '#top' },
   { label: 'Library', href: '#continue-watching' },
-  { label: 'About', href: '#' },
+  { label: 'About', href: '#about' },
   { label: 'Résumé', href: '#' },
+];
+
+const STORY_PARAGRAPHS = [
+  'I’m building a life with intention: a meaningful career, financial independence, and a lasting foundation for my son.',
+  'Legacy Heiress is a reflection of that vision and of the woman I’m becoming as I work toward it.',
+  'I’m ambitious about my future. I want to lead, own, create, and have a voice in the rooms where decisions are made. I value excellence, preparation, and the confidence that comes from knowing your work. For me, success includes the freedom to choose how I spend my time and the ability to create opportunities for the people I care about.',
+  'Motherhood gives that ambition a deeper purpose. When I think about what I want to leave my son, I think about security and opportunity, but also understanding. I want him to know how to make informed decisions, recognize possibilities, and take responsibility for his future. I want the example I set to be part of what he inherits.',
+  'That purpose extends to the way I want to help others. I care about making financial knowledge more approachable so people can take an active role in their own lives whether they’re learning to invest, preparing for their children’s education, or thinking seriously about what their family will need in the years ahead.',
+  'I’m still building toward these goals. This space follows that progress: the work, the learning, the decisions, and the personal growth behind it all.',
+  'As you explore Legacy Heiress, you’ll get to know what I’m creating and what matters to me. My hope is that you leave with a clearer sense of who I am—and a little more confidence in what you can build for yourself.',
+];
+
+const MORE_INFO_PARAGRAPHS = [
+  'Legacy Heiress brings together my professional work, personal ambitions, and commitment to financial empowerment.',
+  'Explore the library for individual projects and their stories. You’ll find completed work alongside ideas still taking shape, with each project’s current status identified.',
+  'Browse the Featured Projects below.',
 ];
 
 const ROWS = [
@@ -66,7 +82,7 @@ const ROWS = [
           "Finding probate foreclosures is manual and time-consuming. Most foreclosure listings don't indicate if they're tied to active probate/estate cases where heirs are motivated to sell. Current process requires manual research across multiple data sources (80% of research time spent here).",
         solution:
           'Developed a systematic approach to identify foreclosures connected to probate cases. Automated heir identification, property valuation, and deal negotiation. Created a deal pipeline management system to track leads from discovery to closure.',
-        github: 'https://github.com/Znovia/probate-foreclosure-acquisition',
+        github: 'https://github.com/Znovia',
       },
       {
         title: 'NC Probate Intelligence System',
@@ -81,7 +97,7 @@ const ROWS = [
         solution:
           'Built a full-stack automation platform that combines public records data, probate case matching algorithms, and lead scoring. Pulls from NC courthouse records, property databases, and foreclosure listings. Automatically identifies probate-connected foreclosures and ranks them by deal potential.',
         techStack: ['Next.js', 'Python', 'FastAPI', 'SQLite'],
-        github: 'https://github.com/Znovia/nc-probate-foreclosure',
+        github: 'https://github.com/Znovia',
       },
       {
         title: 'Duplicate Application Review',
@@ -95,7 +111,7 @@ const ROWS = [
           'At TD Bank, identifying duplicate loan applications is manual and time-consuming. Current process uses Excel sheets to manually compare the current application against 20+ potential duplicates. Error-prone, repetitive, takes hours per batch.',
         solution:
           'Building an automated tool to detect and compare duplicate applications. Flags matching applicants, accounts, phone numbers, and addresses. Compares application details side-by-side, reducing manual comparison time from hours to minutes.',
-        github: 'https://github.com/Znovia/duplicate-application-review',
+        github: 'https://github.com/Znovia',
       },
       {
         title: 'TPA Pipeline',
@@ -117,7 +133,7 @@ const ROWS = [
           'Data validation',
         ],
         techStack: ['Python', 'SQL', 'ETL Framework'],
-        github: 'https://github.com/Znovia/tpa-pipeline',
+        github: 'https://github.com/Znovia',
       },
     ],
   },
@@ -151,7 +167,7 @@ const ROWS = [
       },
       {
         title: 'Wealth Protocol',
-        image: '/coming-wealth-protocol.png',
+        image: '/coming-data-revolution.jpg',
         genre: 'Sci-Fi',
         description:
           'The future of wealth assessment. AI-powered algorithms decode net worth and unlock personalized financial pathways.',
@@ -233,6 +249,7 @@ const ROWS = [
     cards: [
       {
         title: 'The Promotion',
+        image: '/coming-the-promotion-new.jpg',
         genre: 'Thriller',
         description: 'From manager to executive. Watch ambition become authority in the corporate climb.',
         businessProblem:
@@ -242,7 +259,7 @@ const ROWS = [
       },
       {
         title: 'Data Revolution',
-        image: '/coming-data-revolution.jpg',
+        image: '/coming-wealth-protocol.png',
         genre: 'Tech Thriller',
         description: 'Career pivot from finance to tech. The untold story of data engineers building the future.',
         businessProblem:
@@ -280,6 +297,7 @@ const ROWS = [
     cards: [
       {
         title: 'Empire State of Mind',
+        image: '/coming-empire-state-of-mind.jpg',
         genre: 'Epic',
         description:
           'The mindset shift that transforms ordinary ambition into extraordinary empire-building power.',
@@ -300,6 +318,7 @@ const ROWS = [
       },
       {
         title: 'Her Story',
+        image: '/coming-her-story.png',
         genre: 'Cinematic Drama',
         description: 'Your narrative. Your power. The art of storytelling that moves empires.',
         businessProblem:
@@ -309,6 +328,7 @@ const ROWS = [
       },
       {
         title: 'Command the Room',
+        image: '/coming-command-the-room.jpg',
         genre: 'Action',
         description: 'Executive presence that demands respect. The transformation from good to unforgettable.',
         businessProblem:
@@ -546,6 +566,47 @@ function ProjectModal({ project, onClose }) {
   );
 }
 
+function InfoModal({ title, paragraphs, onClose }) {
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKey);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [onClose]);
+
+  return (
+    <div className="modal-backdrop info-modal-backdrop" onClick={onClose}>
+      <div
+        className="modal-panel info-modal-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="info-modal-title"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button type="button" className="modal-close" onClick={onClose} aria-label="Close">
+          &#10005;
+        </button>
+        <div className="modal-body">
+          <h2 id="info-modal-title" className="modal-title">
+            {title}
+          </h2>
+          <div className="about-prose">
+            {paragraphs.map((paragraph, i) => (
+              <p key={i}>{paragraph}</p>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Row({ id, title, tag, cards, onCardClick, comingSoon, accent }) {
   const trackRef = useRef(null);
   const dragState = useRef({ active: false, startX: 0, scrollLeft: 0, moved: false });
@@ -651,11 +712,20 @@ function Row({ id, title, tag, cards, onCardClick, comingSoon, accent }) {
   );
 }
 
+const HERO_VIDEO_URL =
+  'https://res.cloudinary.com/lcc2jgak/video/upload/v1789088796/Agent_Video_-_SCENE_1Image_1_depicts_the_luxury_penthouse_interior__and_the_woman_and_young_boy_stan.mp4';
+const HERO_MUSIC_URL =
+  'https://res.cloudinary.com/lcc2jgak/video/upload/v1789088784/Agent_Music_-_Epic_cinematic_movie-trailer_score__21_seconds__building_from_a_hushed__tense_low_stri.mp3';
+
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [muted, setMuted] = useState(true);
+  const [videoFailed, setVideoFailed] = useState(false);
   const [activeProject, setActiveProject] = useState(null);
+  const [heroModal, setHeroModal] = useState(null); // null | 'story' | 'info'
+  const videoRef = useRef(null);
+  const audioRef = useRef(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 100);
@@ -663,6 +733,97 @@ export default function Home() {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  useEffect(() => {
+    if (!menuOpen) return undefined;
+    const onKey = (e) => {
+      if (e.key === 'Escape') setMenuOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [menuOpen]);
+
+  // Browsers auto-pause off-screen/background video but don't auto-resume
+  // it — bring it back when the tab is visible again so it keeps autoplaying.
+  useEffect(() => {
+    const onVisibilityChange = () => {
+      const video = videoRef.current;
+      if (video && document.visibilityState === 'visible' && video.paused) {
+        video.play().catch(() => {});
+      }
+    };
+    document.addEventListener('visibilitychange', onVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', onVisibilityChange);
+  }, []);
+
+  // The video is the authoritative clock. It has no native `loop` — when it
+  // ends, we manually rewind both video and audio to 0 and restart them
+  // together, so the audio never drifts onto its own independent loop cycle
+  // (its native duration is ~21s vs. the video's ~20s, which would slowly
+  // desync them if each looped on its own timeline).
+  useEffect(() => {
+    const video = videoRef.current;
+    const audio = audioRef.current;
+    if (!video) return undefined;
+
+    const restartTogether = () => {
+      video.currentTime = 0;
+      if (audio) audio.currentTime = 0;
+      video.play().catch(() => {});
+      if (audio && !muted) audio.play().catch(() => {});
+    };
+
+    // Safety net against mid-cycle drift (buffering stalls, differing
+    // playback rates, etc.) — keep audio's position pinned to the video's.
+    const resyncDrift = () => {
+      if (!audio || audio.paused) return;
+      const drift = Math.abs(video.currentTime - audio.currentTime);
+      if (drift > 0.25) {
+        audio.currentTime = video.currentTime;
+      }
+    };
+
+    // Audio must never keep playing while the video isn't (e.g. the browser
+    // auto-pausing background/off-screen video) — mirror video's play state
+    // onto audio so it's never running on its own.
+    const onVideoPause = () => {
+      if (audio) audio.pause();
+    };
+    const onVideoPlay = () => {
+      if (audio && !muted) {
+        audio.currentTime = video.currentTime;
+        audio.play().catch(() => {});
+      }
+    };
+
+    video.addEventListener('ended', restartTogether);
+    video.addEventListener('timeupdate', resyncDrift);
+    video.addEventListener('pause', onVideoPause);
+    video.addEventListener('play', onVideoPlay);
+    return () => {
+      video.removeEventListener('ended', restartTogether);
+      video.removeEventListener('timeupdate', resyncDrift);
+      video.removeEventListener('pause', onVideoPause);
+      video.removeEventListener('play', onVideoPlay);
+    };
+  }, [muted]);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (muted) {
+      audio.pause();
+    } else {
+      // Jump audio to the video's current position so unmuting mid-loop
+      // joins in sync rather than starting the track over from 0.
+      if (video) audio.currentTime = video.currentTime;
+      audio.play().catch(() => {
+        // Autoplay with sound can still be blocked by the browser; the
+        // button remains available for the visitor to try again.
+      });
+    }
+  }, [muted]);
 
   return (
     <main>
@@ -680,11 +841,23 @@ export default function Home() {
           </a>
 
           <nav className="nav-links" aria-label="Primary">
-            {NAV_LINKS.map((link) => (
-              <a key={link.label} href={link.href} className="nav-link">
-                {link.label}
-              </a>
-            ))}
+            {NAV_LINKS.map((link) =>
+              link.label === 'About' ? (
+                <button
+                  key={link.label}
+                  type="button"
+                  onClick={() => setHeroModal('story')}
+                  className="nav-link"
+                  aria-haspopup="dialog"
+                >
+                  {link.label}
+                </button>
+              ) : (
+                <a key={link.label} href={link.href} className="nav-link">
+                  {link.label}
+                </a>
+              )
+            )}
 
             <div className="nav-more">
               <button type="button" className="nav-link nav-more-toggle">
@@ -739,22 +912,57 @@ export default function Home() {
             &#10005;
           </button>
           <nav className="mobile-overlay-nav">
-            {[...NAV_LINKS, { label: 'Work With Me', href: '#contact' }].map((link) => (
-              <a key={link.label} href={link.href} onClick={() => setMenuOpen(false)} className="mobile-overlay-link">
-                {link.label}
-              </a>
-            ))}
+            {[...NAV_LINKS, { label: 'Work With Me', href: '#contact' }].map((link) =>
+              link.label === 'About' ? (
+                <button
+                  key={link.label}
+                  type="button"
+                  onClick={() => {
+                    setMenuOpen(false);
+                    setHeroModal('story');
+                  }}
+                  className="mobile-overlay-link"
+                  aria-haspopup="dialog"
+                >
+                  {link.label}
+                </button>
+              ) : (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="mobile-overlay-link"
+                >
+                  {link.label}
+                </a>
+              )
+            )}
           </nav>
         </div>
       )}
 
       {/* HERO */}
       <section id="top" className="hero">
-        <img
-          className="hero-image"
-          src="/hero-penthouse.png"
-          alt="A woman in a cream dress stands with her son, arm around his shoulder, looking out over the New York City skyline at golden hour from a high-rise penthouse."
-        />
+        {videoFailed ? (
+          <img
+            className="hero-image"
+            src="/hero-penthouse.png"
+            alt="A woman in a cream dress stands with her son, arm around his shoulder, looking out over the New York City skyline at golden hour from a high-rise penthouse."
+          />
+        ) : (
+          <video
+            ref={videoRef}
+            className="hero-image"
+            src={HERO_VIDEO_URL}
+            poster="/hero-penthouse.png"
+            autoPlay
+            muted
+            playsInline
+            onError={() => setVideoFailed(true)}
+            aria-label="Cinematic footage of a woman and her son overlooking the New York City skyline from a high-rise penthouse."
+          />
+        )}
+        <audio ref={audioRef} src={HERO_MUSIC_URL} preload="auto" />
         <div className="hero-overlay-left" />
         <div className="hero-overlay-bottom" />
 
@@ -767,12 +975,22 @@ export default function Home() {
             life rooted in financial freedom and generational wealth.
           </p>
           <div className="hero-actions">
-            <a href="#featured-projects" className="btn btn-primary">
+            <button
+              type="button"
+              onClick={() => setHeroModal('story')}
+              className="btn btn-primary"
+              aria-haspopup="dialog"
+            >
               Explore My Story
-            </a>
-            <a href="#continue-watching" className="btn btn-secondary">
+            </button>
+            <button
+              type="button"
+              onClick={() => setHeroModal('info')}
+              className="btn btn-secondary"
+              aria-haspopup="dialog"
+            >
               More Info
-            </a>
+            </button>
           </div>
         </div>
 
@@ -814,6 +1032,13 @@ export default function Home() {
       ))}
 
       <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} />
+
+      {heroModal === 'story' && (
+        <InfoModal title="Explore My Story" paragraphs={STORY_PARAGRAPHS} onClose={() => setHeroModal(null)} />
+      )}
+      {heroModal === 'info' && (
+        <InfoModal title="More Info" paragraphs={MORE_INFO_PARAGRAPHS} onClose={() => setHeroModal(null)} />
+      )}
 
       {/* FOOTER */}
       <footer id="contact" className="footer">
@@ -933,7 +1158,12 @@ export default function Home() {
         .menu-toggle {
           display: none;
           flex-direction: column;
+          justify-content: center;
+          align-items: center;
           gap: 5px;
+          width: 44px;
+          height: 44px;
+          padding: 0;
           background: none;
           border: none;
         }
@@ -958,8 +1188,13 @@ export default function Home() {
 
         .mobile-overlay-close {
           position: absolute;
-          top: 20px;
-          right: 24px;
+          top: 12px;
+          right: 12px;
+          width: 44px;
+          height: 44px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           background: none;
           border: none;
           color: #ffffff;
@@ -977,6 +1212,8 @@ export default function Home() {
           font-size: 22px;
           font-weight: 600;
           color: #ffffff;
+          background: none;
+          border: none;
         }
 
         .mobile-overlay-link:hover {
@@ -1106,11 +1343,11 @@ export default function Home() {
 
         .sound-toggle {
           position: absolute;
-          right: 24px;
-          bottom: 24px;
+          right: 20px;
+          bottom: 20px;
           z-index: 3;
-          width: 24px;
-          height: 24px;
+          width: 40px;
+          height: 40px;
           border-radius: 50%;
           border: 1px solid rgba(255, 255, 255, 0.6);
           background: rgba(0, 0, 0, 0.4);
@@ -1123,6 +1360,20 @@ export default function Home() {
         .sound-toggle:hover {
           border-color: #ffffff;
           background: rgba(0, 0, 0, 0.6);
+        }
+
+        /* ABOUT (modal prose, used by InfoModal) */
+        .about-prose {
+          display: flex;
+          flex-direction: column;
+          gap: 22px;
+        }
+
+        .about-prose p {
+          font-size: 18px;
+          font-weight: 400;
+          color: #b3b3b3;
+          line-height: 1.75;
         }
 
         /* ROWS */
@@ -1484,6 +1735,7 @@ export default function Home() {
           align-items: center;
           justify-content: center;
           padding: 24px;
+          animation: modal-fade-in 200ms ease-out;
         }
 
         .modal-panel {
@@ -1495,15 +1747,43 @@ export default function Home() {
           background: #1a1a1a;
           border: 1px solid #333333;
           border-radius: 6px;
+          animation: modal-panel-in 220ms ease-out;
+        }
+
+        @keyframes modal-fade-in {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+
+        @keyframes modal-panel-in {
+          from {
+            opacity: 0;
+            transform: translateY(12px) scale(0.98);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .modal-backdrop,
+          .modal-panel {
+            animation: none;
+          }
         }
 
         .modal-close {
           position: absolute;
-          top: 16px;
-          right: 16px;
+          top: 12px;
+          right: 12px;
           z-index: 2;
-          width: 36px;
-          height: 36px;
+          width: 44px;
+          height: 44px;
           border-radius: 50%;
           border: none;
           background: rgba(0, 0, 0, 0.6);
@@ -1682,6 +1962,10 @@ export default function Home() {
             display: flex;
           }
 
+          .about-prose p {
+            font-size: 16px;
+          }
+
           .hero {
             height: 100vh;
             padding-left: 20px;
@@ -1727,8 +2011,44 @@ export default function Home() {
           }
 
           .card-base-title,
-          .card-hover-title {
+          .card-hover-title,
+          .movie-title {
             font-size: 14px;
+          }
+
+          .movie-coming-soon-badge {
+            font-size: 14px;
+            top: 12px;
+            left: 12px;
+          }
+
+          .movie-genre-tag {
+            top: 6px;
+            right: 6px;
+          }
+
+          /* Only the Coming Soon rows keep Netflix-style horizontal scroll on
+             mobile; Continue Watching and Featured Projects stack instead so
+             nothing requires a sideways swipe to be seen. */
+          #continue-watching .row-track,
+          #featured-projects .row-track {
+            flex-direction: column;
+            overflow-x: visible;
+          }
+
+          #continue-watching .card,
+          #featured-projects .card {
+            flex: 1 1 auto;
+            width: 100%;
+            max-width: 480px;
+            height: auto;
+            aspect-ratio: 16 / 9;
+            margin: 0 auto;
+          }
+
+          #continue-watching .row-arrow,
+          #featured-projects .row-arrow {
+            display: none;
           }
 
           .footer {
