@@ -943,28 +943,52 @@ export default function Home() {
 
       {/* HERO */}
       <section id="top" className="hero">
-        {videoFailed ? (
-          <img
-            className="hero-image"
-            src="/hero-penthouse.png"
-            alt="A woman in a cream dress stands with her son, arm around his shoulder, looking out over the New York City skyline at golden hour from a high-rise penthouse."
-          />
-        ) : (
-          <video
-            ref={videoRef}
-            className="hero-image"
-            src={HERO_VIDEO_URL}
-            poster="/hero-penthouse.png"
-            autoPlay
-            muted
-            playsInline
-            onError={() => setVideoFailed(true)}
-            aria-label="Cinematic footage of a woman and her son overlooking the New York City skyline from a high-rise penthouse."
-          />
-        )}
-        <audio ref={audioRef} src={HERO_MUSIC_URL} preload="auto" />
-        <div className="hero-overlay-left" />
-        <div className="hero-overlay-bottom" />
+        <div className="hero-media">
+          {videoFailed ? (
+            <img
+              className="hero-image"
+              src="/hero-penthouse.png"
+              alt="A woman in a cream dress stands with her son, arm around his shoulder, looking out over the New York City skyline at golden hour from a high-rise penthouse."
+            />
+          ) : (
+            <video
+              ref={videoRef}
+              className="hero-image"
+              src={HERO_VIDEO_URL}
+              poster="/hero-penthouse.png"
+              autoPlay
+              muted
+              playsInline
+              onError={() => setVideoFailed(true)}
+              aria-label="Cinematic footage of a woman and her son overlooking the New York City skyline from a high-rise penthouse."
+            />
+          )}
+          <audio ref={audioRef} src={HERO_MUSIC_URL} preload="auto" />
+          <div className="hero-overlay-left" />
+          <div className="hero-overlay-bottom" />
+
+          <button
+            type="button"
+            className="sound-toggle"
+            onClick={() => setMuted((m) => !m)}
+            aria-label={muted ? 'Unmute' : 'Mute'}
+            aria-pressed={!muted}
+          >
+            {muted ? (
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M4 9v6h4l5 5V4L8 9H4z" strokeLinejoin="round" />
+                <line x1="16" y1="9" x2="22" y2="15" strokeLinecap="round" />
+                <line x1="22" y1="9" x2="16" y2="15" strokeLinecap="round" />
+              </svg>
+            ) : (
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M4 9v6h4l5 5V4L8 9H4z" strokeLinejoin="round" />
+                <path d="M16 8a5 5 0 0 1 0 8" strokeLinecap="round" />
+                <path d="M18.5 5.5a9 9 0 0 1 0 13" strokeLinecap="round" />
+              </svg>
+            )}
+          </button>
+        </div>
 
         <div className="hero-content">
           <p className="hero-tag">An Original Portfolio</p>
@@ -989,28 +1013,6 @@ export default function Home() {
             </button>
           </div>
         </div>
-
-        <button
-          type="button"
-          className="sound-toggle"
-          onClick={() => setMuted((m) => !m)}
-          aria-label={muted ? 'Unmute' : 'Mute'}
-          aria-pressed={!muted}
-        >
-          {muted ? (
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M4 9v6h4l5 5V4L8 9H4z" strokeLinejoin="round" />
-              <line x1="16" y1="9" x2="22" y2="15" strokeLinecap="round" />
-              <line x1="22" y1="9" x2="16" y2="15" strokeLinecap="round" />
-            </svg>
-          ) : (
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M4 9v6h4l5 5V4L8 9H4z" strokeLinejoin="round" />
-              <path d="M16 8a5 5 0 0 1 0 8" strokeLinecap="round" />
-              <path d="M18.5 5.5a9 9 0 0 1 0 13" strokeLinecap="round" />
-            </svg>
-          )}
-        </button>
       </section>
 
       {/* STREAMING ROWS */}
@@ -1226,6 +1228,11 @@ export default function Home() {
           padding-left: 60px;
           overflow: hidden;
           background-color: #0f0f0f;
+        }
+
+        .hero-media {
+          position: absolute;
+          inset: 0;
         }
 
         .hero-image {
@@ -1950,21 +1957,54 @@ export default function Home() {
             font-size: 16px;
           }
 
+          /* The hero video is natively 16:9. Forcing it into a near-full-
+             screen portrait box (the old 100vh treatment) meant object-fit:
+             cover had to crop away most of the frame to fill the height. Here
+             the video gets its own full-width band sized to its real aspect
+             ratio (zero cropping), and the text moves out of the overlay into
+             a normal block below it instead of trying to fit inside a much
+             shorter box. */
           .hero {
-            height: 100vh;
-            padding-left: 20px;
+            height: auto;
+            display: block;
+            padding-left: 0;
+          }
+
+          .hero-media {
+            position: relative;
+            inset: auto;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+          }
+
+          .hero-overlay-left {
+            display: none;
+          }
+
+          .hero-overlay-bottom {
+            height: 35%;
+          }
+
+          .sound-toggle {
+            width: 36px;
+            height: 36px;
+            right: 12px;
+            bottom: 12px;
           }
 
           .hero-content {
             max-width: 100%;
+            padding: 32px 20px 40px;
           }
 
           .hero-title {
-            font-size: 48px;
+            font-size: 44px;
           }
 
           .hero-tagline {
             font-size: 18px;
+            margin-bottom: 28px;
           }
 
           .hero-actions {
